@@ -1,4 +1,5 @@
-﻿using Homs.AuthService.Application.Interfaces;
+﻿using DotNetEnv;
+using Homs.AuthService.Application.Interfaces;
 using Homs.AuthService.Infrastructure.Persistence;
 using Homs.AuthService.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
@@ -11,10 +12,14 @@ namespace Homs.AuthService.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            Env.Load(); // Load .env file
+
+            var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+
             // Register DbContext with PostgreSQL
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(
-                    configuration.GetConnectionString("DefaultConnection"),
+                    connectionString,
                     b => b.MigrationsAssembly("Homs.AuthService.Infrastructure")));
 
             // Register infrastructure services
