@@ -63,14 +63,26 @@ Homs.AuthService/
 - PostgreSQL database server
 
 ### Database Configuration
+### Database Configuration
 
-The application is configured to use PostgreSQL. You can modify the connection string in `appsettings.json`:
+The application is configured to use PostgreSQL with environment variables for enhanced security.
 
-```json
-"ConnectionStrings": {
-  "DefaultConnection": "Host=localhost;Port=5432;Database=HomsAuthServiceDb;Username=postgres;Password=yourpassword"
-}
+1. Create a `.env` file in the `Homs.AuthService.Infrastructure` directory:
+
 ```
+CONNECTION_STRING=Host=localhost;Port=5432;Database=HomsAuthServiceDb;Username=postgres;Password=yourpassword
+```
+
+2. Install the DotNetEnv package:
+
+```bash
+cd Homs.AuthService.Infrastructure
+dotnet add package DotNetEnv
+```
+
+3. The application will load environment variables from the `.env` file during startup.
+
+> **Note:** Make sure to add `.env` to your `.gitignore` file to prevent committing sensitive credentials.
 
 ## Running the Application
 

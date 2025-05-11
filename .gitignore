@@ -5,3 +5,6 @@
 *.user
 bin/
 obj/
+
+# Environment files
+.env
